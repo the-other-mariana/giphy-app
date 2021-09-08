@@ -1,0 +1,15 @@
+.nav {
+  background-color: gray;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+a {
+  color: aquamarine;
+  margin: 1rem;
+}
+
+a:hover {
+  color: white;
+}
