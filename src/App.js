@@ -5,6 +5,7 @@ import Card from './components/Card.js';
 import Navbar from './components/Navbar.js';
 
 const APIKEY = 'XCp5X3JojAaVPB4Iz8D0LddKfEtGqmC8';
+const gifs = 5;
 
 // a component can be created through a function
 // a component is a visual snippet
@@ -13,30 +14,39 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-        results: []
+        titles: [],
+        usernames: [],
+        srcs: []
     }
     this.updateState = this.updateState.bind(this) 
     this.fetchData();
   }
   updateState(obj){ 
     // Changing state 
-    var temp = this.state.results;
-    temp.push(obj)
-    this.setState({results: temp}) 
+    var usernames = this.state.usernames;
+    usernames.push(obj.username)
+    var titles = this.state.titles;
+    titles.push(obj.title)
+    var srcs = this.state.srcs;
+    srcs.push(obj.src)
+    this.setState({ titles: titles, usernames: usernames, srcs: srcs }) 
   } 
 
   fetchData(){
-    for (var i = 0; i < 5; i++){
+    for (var i = 0; i < gifs; i++){
       const url = `https://api.giphy.com/v1/gifs/random?api_key=${APIKEY}&limit=1`;
       // fetch has two promises, 1st then gets the response, the 2nd then gets the data
       fetch(url)
       .then(res => res.json())
       .then(content => {
         // responses from giphy api have 3 components: data pagination meta
-        console.log(typeof(content.data.username));
-        console.log(content.data.length);
-        console.log(content);
-        this.updateState(content.data.username)
+        console.log(content.data.title + " by-> "+ content.data.username);
+        console.log(content.data);
+        this.updateState({
+          title: content.data.title,
+          username: content.data.username,
+          src: content.data.images.downsized.url
+        })
       })
       .catch((err) => {
         console.error('Error at fetching from the url: ' + err);
@@ -45,14 +55,14 @@ class App extends Component {
     
   }
   render() {
+    const cards = [];
+    for (let i = 0; i < gifs; i++) {
+      cards.push(<Card key={i} user={this.state.usernames[i]} title={this.state.titles[i]} src={this.state.srcs[i]}></Card>);
+    }
     return (
       <div>
         <Navbar></Navbar>
-        <Card data={this.state.results[0]}></Card>
-        <Card data={this.state.results[1]}></Card>
-        <Card data={this.state.results[2]}></Card>
-        <Card data={this.state.results[3]}></Card>
-        <Card data={this.state.results[4]}></Card>
+        {cards}
       </div>
     );
   }

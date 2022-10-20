@@ -4,7 +4,9 @@
   padding: 1rem;
   margin: 1rem;
   border-radius: 10px;
-  width: 15rem;
+  min-width: 15rem;
+  min-height: 15rem;
+  display: inline-block;
 }
 
 .card-title {

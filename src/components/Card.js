@@ -6,10 +6,13 @@ import './Card.css'; // use the css
 function Card (props) {
   return (
     <div className="card">
-      <h1 className="card-title"> Title </h1>
-      <h2> Username: {props.data} </h2>
+      <h1 className="card-title"> Title: {props.title} </h1>
+      <h2> Username: {props.user} </h2>
       <p> Description </p>
-      <img></img>
+      <div >
+        <img src={props.src}></img>
+      </div>
+      
     </div>
   );
 }
