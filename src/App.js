@@ -24,11 +24,13 @@ class App extends Component {
   updateState(obj){ 
     // Changing state 
     var usernames = this.state.usernames;
-    usernames.push(obj.username)
+    (obj.username) ? usernames.push(obj.username) : usernames.push('No user')
+    
     var titles = this.state.titles;
-    titles.push(obj.title)
+    (obj.title) ? titles.push(obj.title) : titles.push('No title')
+
     var srcs = this.state.srcs;
-    srcs.push(obj.src)
+    (obj.src) ? srcs.push(obj.src) : srcs.push('No image found :(')
     this.setState({ titles: titles, usernames: usernames, srcs: srcs }) 
   } 
 
